@@ -4,8 +4,9 @@ import CategoryButtons from './CategoryButtons';
 
 export default function NoteArea() {
     const [content, setContent] = useState([]);
-    const [text, setText] = useState('')
-    const [node_content, setNodeContent] = useState([])
+    const [text, setText] = useState('');
+    const [node_content, setNodeContent] = useState([]);
+    const [shift_pressed, setShift] = useState(false)
     let input_field;
 
     function noteElement() {
@@ -26,6 +27,7 @@ export default function NoteArea() {
             return
         }
         if(input_field.value != '') {
+            console.log(text)
             let new_node = <div className="note-node"> {text} </div>;
             let updated_array = content;
             updated_array.push(new_node);
@@ -49,6 +51,10 @@ export default function NoteArea() {
         setText(input);
     }
 
+    function updateShift() {
+        setShift(!shift);
+    }
+
     return (
         <div class="main-content">
         <div class="top-bar">
@@ -69,13 +75,30 @@ export default function NoteArea() {
         )}
         <div class="input-area">
             <div class="input-container">
-                <input 
+                <textarea 
                     type="text" 
                     class="note-input" 
                     placeholder={node_content.length > 0 ? node_content : "Type your note here..."} 
                     ref={el => input_field = el} 
                     onChange={(e) => updateContent(e.target.value)}
-                    onKeyDown={(e) => {if(e.key == "Enter"){updateNodeContent()}; console.log(e.key)}}
+                    onKeyUp={(e) => {
+                        if(e.key == "Shift") {
+                            updateShift()
+                        }
+                    }}
+                    onKeyDown={(e) => {
+                            if(e.key == "Enter")
+                            {
+                                if(shift) {
+                                    
+                                }
+                                updateNodeContent();
+                            } else if (e.key == "Shift") {
+                                updateShift()
+                            }
+                            console.log(e.key)
+                        }
+                    }
                 />
                 <button class="attachment-button">📎</button>
                 <button class="send-button" onClick={noteElement}>↑</button>
