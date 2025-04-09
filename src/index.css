@@ -203,6 +203,8 @@
   color: white;
   padding: 8px;
   outline: none;
+  max-height:40vh;
+  resize: none;
 }
 
 .note-input::placeholder {

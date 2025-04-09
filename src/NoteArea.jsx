@@ -5,27 +5,10 @@ import CategoryButtons from './CategoryButtons';
 export default function NoteArea() {
     const [content, setContent] = useState([]);
     const [text, setText] = useState('');
-    const [node_content, setNodeContent] = useState([]);
     const [shift_pressed, setShift] = useState(false)
     let input_field;
 
     function noteElement() {
-        console.log(node_content.length)
-        if(node_content.length > 0) {
-            console.log("New Node")
-            let new_node = (
-                <div className="note-node">
-                    {node_content}
-                </div>
-            )
-            let updated_array = content;
-            updated_array.push(new_node);
-            setContent(updated_array);
-            setNodeContent([]);
-            input_field.value = '';
-            setText(input_field.value);
-            return
-        }
         if(input_field.value != '') {
             console.log(text)
             let new_node = <div className="note-node"> {text} </div>;
@@ -34,25 +17,19 @@ export default function NoteArea() {
             setContent(updated_array);
             input_field.value = '';
             setText(input_field.value);
+            input_field.style.height = 'auto';
+            input_field.style.height = `${input_field.scrollHeight}px`;
         }
     }
 
-    function updateNodeContent() {
-        if(text == '') {return}
-        let updated_content = node_content;
-        updated_content.push(text);
-        updated_content.push(<br />);
-        setText('');
-        input_field.value = ''
-        setNodeContent(updated_content);
-    }
-
     function updateContent(input) {
+        input_field.style.height = 'auto';
+        input_field.style.height = `${input_field.scrollHeight}px`;
         setText(input);
     }
 
     function updateShift() {
-        setShift(!shift);
+        setShift(!shift_pressed);
     }
 
     return (
@@ -78,7 +55,7 @@ export default function NoteArea() {
                 <textarea 
                     type="text" 
                     class="note-input" 
-                    placeholder={node_content.length > 0 ? node_content : "Type your note here..."} 
+                    placeholder="Type your note here..." 
                     ref={el => input_field = el} 
                     onChange={(e) => updateContent(e.target.value)}
                     onKeyUp={(e) => {
@@ -89,10 +66,9 @@ export default function NoteArea() {
                     onKeyDown={(e) => {
                             if(e.key == "Enter")
                             {
-                                if(shift) {
-                                    
+                                if(shift_pressed) {
+                                    noteElement();
                                 }
-                                updateNodeContent();
                             } else if (e.key == "Shift") {
                                 updateShift()
                             }
