@@ -11,7 +11,7 @@ export default function NoteArea() {
 
     function noteElement() {
         if(input_field.value != '') {
-            console.log(text)
+            console.log(input_field)
             let new_node = <div className="note-node"> {text} </div>;
             let updated_array = content;
             updated_array.push(new_node);
@@ -39,28 +39,28 @@ export default function NoteArea() {
     }
 
     return (
-        <div class="main-content">
-        <div class="top-bar">
-            <button class="icon-button">⊞</button>
-            <button class="icon-button">☀</button>
+        <div className="main-content">
+        <div className="top-bar">
+            <button className="icon-button">⊞</button>
+            <button className="icon-button">☀</button>
         </div>
         {content == "" ? (
-            <div class="empty-state">
+            <div className="empty-state">
                 <div>
-                    <h2 class="empty-state-title">What would you like to note down?</h2>
+                    <h2 className="empty-state-title">What would you like to note down?</h2>
                     <CategoryButtons />
                 </div>
             </div>
         ) : (
-            <div class="text-state">
+            <div className="text-state">
                 {content}
             </div>
         )}
-        <div class="input-area">
-            <div class="input-container">
+        <div className="input-area">
+            <div className="input-container">
                 <textarea 
                     type="text" 
-                    class="note-input" 
+                    className="note-input" 
                     placeholder="Type your note here..." 
                     ref={el => input_field = el} 
                     onChange={(e) => updateContent(e.target.value)}
@@ -73,6 +73,7 @@ export default function NoteArea() {
                             if(e.key == "Enter")
                             {
                                 if(shift_pressed) {
+                                    e.preventDefault();
                                     noteElement();
                                 }
                             } else if (e.key == "Shift") {
@@ -83,8 +84,8 @@ export default function NoteArea() {
                     }
                 />
                 <p>Input: {text.length}/{input_limit}</p>
-                <button class="attachment-button">📎</button>
-                <button class="send-button" onClick={noteElement}>↑</button>
+                <button className="attachment-button">📎</button>
+                <button className="send-button" onClick={noteElement}>↑</button>
             </div>
         </div>
     </div>

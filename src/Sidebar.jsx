@@ -2,18 +2,18 @@ import './index.css'
 
 export default function Sidebar() {
     return (
-        <div class="sidebar">
-            <div class="sidebar-header">
-                <h1 class="app-title">LambdaNotes</h1>
-                <button class="new-note-btn">New Note</button>
-                <div class="search-container">
-                    <span class="search-icon">🔍</span>
-                    <input type="text" class="search-input" placeholder="Search your notes..." />
+        <div className="sidebar">
+            <div className="sidebar-header">
+                <h1 className="app-title">LambdaNotes</h1>
+                <button className="new-note-btn">New Note</button>
+                <div className="search-container">
+                    <span className="search-icon">🔍</span>
+                    <input type="text" className="search-input" placeholder="Search your notes..." />
                 </div>
             </div>
-            <div class="sidebar-footer">
-                <a href="#" class="login-link">
-                    <span class="login-icon">→</span>
+            <div className="sidebar-footer">
+                <a href="#" className="login-link">
+                    <span className="login-icon">→</span>
                     <span>Login</span>
                 </a>
             </div>
