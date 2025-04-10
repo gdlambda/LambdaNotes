@@ -5,7 +5,8 @@ import CategoryButtons from './CategoryButtons';
 export default function NoteArea() {
     const [content, setContent] = useState([]);
     const [text, setText] = useState('');
-    const [shift_pressed, setShift] = useState(false)
+    const [shift_pressed, setShift] = useState(false);
+    const input_limit = 2048;
     let input_field;
 
     function noteElement() {
@@ -23,6 +24,11 @@ export default function NoteArea() {
     }
 
     function updateContent(input) {
+        if(input.length >= input_limit) {
+            input = input.slice(0, input_limit);
+            console.log(input);
+            input_field.value = input;
+        }
         input_field.style.height = 'auto';
         input_field.style.height = `${input_field.scrollHeight}px`;
         setText(input);
@@ -76,6 +82,7 @@ export default function NoteArea() {
                         }
                     }
                 />
+                <p>Input: {text.length}/{input_limit}</p>
                 <button class="attachment-button">📎</button>
                 <button class="send-button" onClick={noteElement}>↑</button>
             </div>
@@ -83,10 +90,3 @@ export default function NoteArea() {
     </div>
     )
 }
-
-/*
-
-        <div class="output-area">
-
-        </div>
-*/
