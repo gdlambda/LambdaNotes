@@ -7,7 +7,7 @@ import './index.css'
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <input type="checkbox" id="menu-toggle" />
-    <label for="menu-toggle" className="menu-toggle-label">☰</label>
+    <label htmlFor="menu-toggle" className="menu-toggle-label">☰</label>
     <div className="menu-overlay"></div>
     <Sidebar />
     <NoteArea />

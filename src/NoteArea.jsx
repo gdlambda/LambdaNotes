@@ -6,13 +6,51 @@ export default function NoteArea() {
     const [content, setContent] = useState([]);
     const [text, setText] = useState('');
     const [shift_pressed, setShift] = useState(false);
+    const [numNodes, setNumNodes] = useState(0);
+    const [headingSize, setHeadingSize] = useState(0);
+    const [wasHeadingChar, setWasHeadingChar] = useState(false);
+    const [startOfLine, setStartOfLine] = useState(true);
     const input_limit = 2048;
     let input_field;
 
+    function parseMarkdown(input) {
+        for(let char of input) {
+            console.log(char);
+            if(char == "#") {
+                console.log("Start of Line?: ")
+                console.log(startOfLine)
+                console.log("Was Heading Char?: ")
+                console.log(wasHeadingChar)
+                if(startOfLine || wasHeadingChar) {
+                    let new_size = headingSize >= 3 ? 3 : headingSize + 1;
+                    console.log("New Size: ")
+                    console.log(new_size);
+                    setHeadingSize(new_size);
+                    setWasHeadingChar(true);
+                }
+                console.log("Heading Size: ")
+                console.log(headingSize);
+            } else {
+                setWasHeadingChar(false);
+            }
+    
+    
+            if(char == '\n') {
+                setStartOfLine(true); 
+            } else {
+                setStartOfLine(false);
+            }
+        }
+    }
+
     function noteElement() {
         if(input_field.value != '') {
-            console.log(input_field)
-            let new_node = <div className="note-node"> {text} </div>;
+            setHeadingSize(0);
+            setWasHeadingChar(false);
+            setStartOfLine(true);
+            parseMarkdown(input_field.value);
+            let new_node = <div key={numNodes} className="note-node"> {text} </div>;
+            setNumNodes(numNodes + 1);
             let updated_array = content;
             updated_array.push(new_node);
             setContent(updated_array);
@@ -79,7 +117,6 @@ export default function NoteArea() {
                             } else if (e.key == "Shift") {
                                 updateShift()
                             }
-                            console.log(e.key)
                         }
                     }
                 />
